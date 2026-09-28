@@ -4,7 +4,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 const call = (channel) => (...args) => ipcRenderer.invoke(channel, ...args);
 
-contextBridge.exposeInMainWorld('menage', {
+contextBridge.exposeInMainWorld('cleanTonMac', {
   systemInfo: call('system:info'),
   scan: call('scan'),
   listApps: call('apps:list'),

@@ -1,6 +1,6 @@
 'use strict';
 
-const api = window.menage;
+const api = window.cleanTonMac;
 
 // ------------------------------------------------------------------- icônes
 
@@ -201,7 +201,7 @@ async function emptyTrash() {
   const size = state.trash?.size;
   const ok = await confirmModal({
     title: 'Vider la Corbeille ?',
-    body: `<p>${size != null ? `<strong>${fmtSize(size)}</strong> seront supprimés` : 'Tout son contenu sera supprimé'} définitivement. Cette action est irréversible.</p><p>macOS peut te demander d'autoriser Ménage à piloter le Finder la première fois.</p>`,
+    body: `<p>${size != null ? `<strong>${fmtSize(size)}</strong> seront supprimés` : 'Tout son contenu sera supprimé'} définitivement. Cette action est irréversible.</p><p>macOS peut te demander d'autoriser cleanTonMac à piloter le Finder la première fois.</p>`,
     confirm: 'Vider la corbeille',
     danger: true,
   });
@@ -417,8 +417,8 @@ function viewDashboard() {
 
   const fda = state.info && !state.info.fda ? `
     <div class="callout info">${icon('shield')}
-      <div><strong>Accès complet au disque désactivé.</strong> Ménage fonctionne, mais certaines tailles
-      (Corbeille, données protégées des apps) seront incomplètes. Autorise le Terminal (ou Ménage) dans
+      <div><strong>Accès complet au disque désactivé.</strong> cleanTonMac fonctionne, mais certaines tailles
+      (Corbeille, données protégées des apps) seront incomplètes. Autorise le Terminal (ou cleanTonMac) dans
       Réglages › Confidentialité et sécurité › Accès complet au disque.</div>
       <button class="btn" data-act="fda">Ouvrir les réglages</button>
     </div>` : '';

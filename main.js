@@ -31,7 +31,7 @@ function protectedReason(p) {
   const r = path.resolve(p);
   const userData = app.getPath('userData');
   const inside = (t) => r === t || r.startsWith(t + '/');
-  if (inside(APP_DIR) || inside(userData) || userData.startsWith(r + '/') || APP_DIR.startsWith(r + '/')) return 'Utilisé par Ménage';
+  if (inside(APP_DIR) || inside(userData) || userData.startsWith(r + '/') || APP_DIR.startsWith(r + '/')) return 'Utilisé par cleanTonMac';
   if (PROTECTED.has(r)) return 'Dossier système protégé';
   if (PROTECTED_TREES.some(inside)) return 'Dossier sensible protégé';
   if (r.startsWith(HOME + '/')) return null;
@@ -47,7 +47,7 @@ function createWindow() {
     height: 820,
     minWidth: 980,
     minHeight: 640,
-    title: 'Ménage',
+    title: 'cleanTonMac',
     titleBarStyle: 'hiddenInset',
     trafficLightPosition: { x: 18, y: 18 },
     webPreferences: {
@@ -63,7 +63,7 @@ function createWindow() {
   win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' }; });
   win.webContents.on('will-navigate', (e) => e.preventDefault());
 
-  if (process.env.MENAGE_SNAPSHOT) debugSnapshot(process.env.MENAGE_SNAPSHOT);
+  if (process.env.CLEANTONMAC_SNAPSHOT) debugSnapshot(process.env.CLEANTONMAC_SNAPSHOT);
 }
 
 // Mode test : exécute un script dans la page, capture la fenêtre et quitte.
@@ -71,8 +71,8 @@ function debugSnapshot(out) {
   win.webContents.on('console-message', (e) => console.log(`[page:${e.level}] ${e.message}`));
   win.webContents.once('did-finish-load', async () => {
     try {
-      if (process.env.MENAGE_EVAL) await win.webContents.executeJavaScript(process.env.MENAGE_EVAL);
-      await new Promise((r) => setTimeout(r, Number(process.env.MENAGE_WAIT || 4000)));
+      if (process.env.CLEANTONMAC_EVAL) await win.webContents.executeJavaScript(process.env.CLEANTONMAC_EVAL);
+      await new Promise((r) => setTimeout(r, Number(process.env.CLEANTONMAC_WAIT || 4000)));
       const img = await win.webContents.capturePage();
       fs.writeFileSync(out, img.toPNG());
     } catch (e) { console.error(e); }

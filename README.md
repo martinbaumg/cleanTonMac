@@ -1,8 +1,8 @@
 # cleanTonMac
 
-**Ménage** est un tableau de bord pour macOS, dans l'esprit de CleanMyMac, qui repère les caches, les restes d'applications désinstallées et les fichiers oubliés qui encombrent ton disque, puis t'aide à les supprimer **sans risque** : tout part dans la Corbeille.
+**cleanTonMac** est un tableau de bord pour macOS, dans l'esprit de CleanMyMac, qui repère les caches, les restes d'applications désinstallées et les fichiers oubliés qui encombrent ton disque, puis t'aide à les supprimer **sans risque** : tout part dans la Corbeille.
 
-![Tableau de bord de Ménage](docs/tableau-de-bord.png)
+![Tableau de bord de cleanTonMac](docs/tableau-de-bord.png)
 
 - **Gratuit et local** : aucune donnée ne quitte ton Mac, aucun compte, aucune télémétrie.
 - **Transparent** : chaque élément affiche son chemin exact, sa taille et sa date de modification. Un clic l'ouvre dans le Finder.
@@ -14,13 +14,14 @@
 
 - [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Ce que Ménage analyse](#ce-que-ménage-analyse)
+- [Ce que cleanTonMac analyse](#ce-que-cleantonmac-analyse)
 - [Comment ça fonctionne](#comment-ça-fonctionne)
 - [Sécurité](#sécurité)
 - [Autorisations macOS](#autorisations-macos)
 - [Structure du projet](#structure-du-projet)
 - [Développement](#développement)
 - [Limites connues](#limites-connues)
+- [Licence](#licence)
 
 ---
 
@@ -50,7 +51,7 @@ Ensuite, `npm start` suffit pour relancer l'application.
 
 ### 1. Analyser
 
-Au lancement, Ménage analyse automatiquement ton Mac, en quelques secondes. Le **tableau de bord** affiche :
+Au lancement, cleanTonMac analyse automatiquement ton Mac, en quelques secondes. Le **tableau de bord** affiche :
 
 - l'occupation du disque,
 - l'**espace récupérable** total, et la part « sans risque »,
@@ -100,7 +101,7 @@ La taille des dossiers se calcule progressivement. Des raccourcis mènent à la 
 
 ---
 
-## Ce que Ménage analyse
+## Ce que cleanTonMac analyse
 
 | Catégorie | Emplacements | Risque |
 |---|---|---|
@@ -119,7 +120,7 @@ La taille des dossiers se calcule progressivement. Des raccourcis mènent à la 
 
 ### Architecture
 
-Ménage est une application [Electron](https://www.electronjs.org/) sans framework ni bundler, en trois couches :
+cleanTonMac est une application [Electron](https://www.electronjs.org/) sans framework ni bundler, en trois couches :
 
 ```
 ┌────────────────────────┐   IPC (contextBridge)   ┌──────────────────────────┐
@@ -145,7 +146,7 @@ Ménage est une application [Electron](https://www.electronjs.org/) sans framewo
 
 ### Détection des restes d'applications
 
-C'est la partie la plus délicate. Ménage construit d'abord un **index de ce qui est installé** :
+C'est la partie la plus délicate. cleanTonMac construit d'abord un **index de ce qui est installé** :
 
 1. toutes les apps de `/Applications`, `~/Applications` et `/System/Applications`, avec leur identifiant (`com.editeur.app`), leur nom, leur exécutable et leur éditeur,
 2. les identifiants d'équipe de signature des apps tierces,
@@ -154,17 +155,17 @@ C'est la partie la plus délicate. Ménage construit d'abord un **index de ce qu
 
 Chaque dossier de la Bibliothèque est ensuite comparé à cet index :
 
-- s'il porte un **identifiant** (`com.voicestudio.desktop`), Ménage cherche une app au même identifiant, ou au même préfixe, ou du même éditeur,
-- s'il porte un **nom** (`VoiceStudio`), Ménage cherche une app, une commande ou un processus au nom proche,
+- s'il porte un **identifiant** (`com.voicestudio.desktop`), cleanTonMac cherche une app au même identifiant, ou au même préfixe, ou du même éditeur,
+- s'il porte un **nom** (`VoiceStudio`), cleanTonMac cherche une app, une commande ou un processus au nom proche,
 - les éléments d'Apple et du système sont toujours ignorés,
-- pour un agent de démarrage (`LaunchAgents`), Ménage vérifie si le programme qu'il lance existe encore.
+- pour un agent de démarrage (`LaunchAgents`), cleanTonMac vérifie si le programme qu'il lance existe encore.
 
 Tout ce qui ne correspond à rien est proposé comme **reste d'app**. La détection est volontairement prudente : dans le doute, un élément est considéré comme installé. Une détection automatique reste toutefois une supposition. Vérifie donc les lignes, surtout celles marquées « Utilisé récemment ».
 
 ### Modèles IA
 
-Les modèles Hugging Face sont listés un par un (`organisation/modèle`). Quand un fichier marqueur l'indique, Ménage affiche l'application qui a téléchargé le modèle.
-Si ton cache utilise le dossier `blobs` partagé, les fichiers réels y sont stockés. Ménage le signale : supprimer un modèle sans ce dossier ne libère pas l'espace.
+Les modèles Hugging Face sont listés un par un (`organisation/modèle`). Quand un fichier marqueur l'indique, cleanTonMac affiche l'application qui a téléchargé le modèle.
+Si ton cache utilise le dossier `blobs` partagé, les fichiers réels y sont stockés. cleanTonMac le signale : supprimer un modèle sans ce dossier ne libère pas l'espace.
 
 ---
 
@@ -179,7 +180,7 @@ La suppression est encadrée côté processus principal, indépendamment de l'in
   - ton dossier personnel, `~/Library` et ses dossiers principaux,
   - Documents, Bureau, Téléchargements, Images, Musique, Vidéos,
   - `~/.ssh`, `~/.gnupg`, les trousseaux, tes fichiers de configuration de shell,
-  - le dossier de Ménage lui-même.
+  - le dossier de cleanTonMac lui-même.
 - **Pas de doublons.** Si un dossier et un fichier qu'il contient sont tous deux sélectionnés, seul le dossier est traité.
 - **Pas d'accès réseau.** L'application ne se connecte à rien.
 
@@ -223,9 +224,9 @@ Catégories disponibles : `caches`, `logs`, `dev`, `ai`, `orphans`, `downloads`,
 Capturer l'interface automatiquement (pratique pour vérifier un changement) :
 
 ```bash
-MENAGE_SNAPSHOT=capture.png MENAGE_WAIT=8000 npx electron .
+CLEANTONMAC_SNAPSHOT=capture.png CLEANTONMAC_WAIT=8000 npx electron .
 # Avec une action avant la capture :
-MENAGE_SNAPSHOT=apps.png MENAGE_EVAL="document.querySelector('[data-view=apps]').click()" npx electron .
+CLEANTONMAC_SNAPSHOT=apps.png CLEANTONMAC_EVAL="document.querySelector('[data-view=apps]').click()" npx electron .
 ```
 
 Pour ajouter un emplacement à analyser, il suffit en général d'ajouter une ligne dans `DEV_PATHS` ou dans la liste `singles` de `scanAI` (`src/scanner.js`).
@@ -236,5 +237,11 @@ Pour ajouter un emplacement à analyser, il suffit en général d'ajouter une li
 
 - **macOS uniquement.** Les chemins et outils utilisés (`mdls`, `plutil`, `codesign`) sont propres à macOS.
 - La détection des restes d'apps est **heuristique** : faux positifs possibles pour des outils en ligne de commande ou des dossiers partagés par plusieurs apps du même éditeur.
-- Les apps installées par un administrateur (propriété de `root`) ne peuvent pas être mises à la Corbeille sans mot de passe. Ménage te le signale : supprime-les depuis le Finder.
+- Les apps installées par un administrateur (propriété de `root`) ne peuvent pas être mises à la Corbeille sans mot de passe. cleanTonMac te le signale : supprime-les depuis le Finder.
 - L'application se lance pour l'instant avec `npm start`. Il n'existe pas encore de `.app` prête à télécharger.
+
+---
+
+## Licence
+
+Distribué sous licence [MIT](LICENSE) : tu peux utiliser, modifier et redistribuer ce code librement, à condition de conserver la mention de copyright.

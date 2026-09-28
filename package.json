@@ -1,6 +1,6 @@
 {
   "name": "cleantonmac",
-  "productName": "Ménage",
+  "productName": "cleanTonMac",
   "version": "1.0.0",
   "description": "Tableau de bord macOS pour repérer et supprimer caches, restes d'apps et fichiers inutiles",
   "keywords": [
@@ -14,6 +14,8 @@
     "type": "git",
     "url": "https://github.com/martinbaumg/cleanTonMac.git"
   },
+  "license": "MIT",
+  "author": "martin baumgaertner",
   "main": "main.js",
   "private": true,
   "os": [
