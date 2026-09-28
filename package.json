@@ -1,0 +1,31 @@
+{
+  "name": "cleantonmac",
+  "productName": "Ménage",
+  "version": "1.0.0",
+  "description": "Tableau de bord macOS pour repérer et supprimer caches, restes d'apps et fichiers inutiles",
+  "keywords": [
+    "macos",
+    "cleaner",
+    "electron",
+    "cache",
+    "disk-space"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinbaumg/cleanTonMac.git"
+  },
+  "main": "main.js",
+  "private": true,
+  "os": [
+    "darwin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^44.4.5"
+  }
+}
